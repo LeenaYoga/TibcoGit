@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/webservicescenario/Schema.xsd2"
+	 targetNamespace="http://www.tibco.com/schemas/webservicescenario/Schema.xsd2"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="PoliceReq">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Id"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Id" type="xs:string"/>
+	<xs:element name="PoliceRes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Name"/>
+				<xs:element ref="Id"/>
+				<xs:element ref="Designation"/>
+				<xs:element ref="Fathername"/>
+				<xs:element ref="Address"/>
+				<xs:element ref="Pin"/>
+				<xs:element ref="Contact"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Name" type="xs:string"/>
+	<xs:element name="Designation" type="xs:string"/>
+	<xs:element name="Fathername" type="xs:string"/>
+	<xs:element name="Address" type="xs:string"/>
+	<xs:element name="Pin" type="xs:int"/>
+	<xs:element name="Contact" type="xs:int"/>
+	<xs:element name="root">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PoliceRes" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

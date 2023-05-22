@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/webservicescenario/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx4="http://www.tibco.com/schemas/webservicescenario/Schema.xsd2" xmlns:pfx3="http://xmlns.example.com/1684739311931" xmlns:pfx2="http://xmlns.example.com/1684175866968" xmlns:pfx="http://xmlns.example.com/1684175752117">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/webservicescenario/Schema.xsd"/>
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/webservicescenario/Schema.xsd2" schemaLocation="/PoliceSchema.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1684739311931" location="/AbstractWSDL.wsdl"/>
+    <pd:name>jmsporttypeoperation.process</pd:name>
+    <pd:startName>SOAPEventSource</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings>
+        <xsl:for-each select="$Map-Data/pfx4:PoliceRes">
+            <pfx4:PoliceRes>
+                <pfx4:Name>
+                    <xsl:value-of select="pfx4:Name"/>
+                </pfx4:Name>
+                <pfx4:Id>
+                    <xsl:value-of select="pfx4:Id"/>
+                </pfx4:Id>
+                <pfx4:Designation>
+                    <xsl:value-of select="pfx4:Designation"/>
+                </pfx4:Designation>
+                <pfx4:Fathername>
+                    <xsl:value-of select="pfx4:Fathername"/>
+                </pfx4:Fathername>
+                <pfx4:Address>
+                    <xsl:value-of select="pfx4:Address"/>
+                </pfx4:Address>
+                <pfx4:Pin>
+                    <xsl:value-of select="pfx4:Pin"/>
+                </pfx4:Pin>
+                <pfx4:Contact>
+                    <xsl:value-of select="pfx4:Contact"/>
+                </pfx4:Contact>
+            </pfx4:PoliceRes>
+        </xsl:for-each>
+    </pd:returnBindings>
+    <pd:starter name="SOAPEventSource">
+        <pd:type>com.tibco.plugin.soap.SOAPEventSource</pd:type>
+        <pd:resourceType>ae.activities.SOAPEventSourceUI</pd:resourceType>
+        <pd:x>116</pd:x>
+        <pd:y>82</pd:y>
+        <config>
+            <service>pfx3:PortType</service>
+            <wsdlNamespaceRoot>http://xmlns.example.com/1684739311931/OperationImpl</wsdlNamespaceRoot>
+            <operation>Operation</operation>
+            <portAddressPrefix/>
+            <operationStyle>document</operationStyle>
+            <soapUse>literal</soapUse>
+            <embedWsdlComponents>true</embedWsdlComponents>
+            <embedSchemaComponents>true</embedSchemaComponents>
+            <soapAction>/jmsporttypeoperation</soapAction>
+            <sharedChannel>/JMS Connection.sharedjmscon</sharedChannel>
+            <sharedChannels>
+                <jmsChannel>
+                    <JMSDestinationType>queue</JMSDestinationType>
+                    <JMSAcknowledgementMode>1</JMSAcknowledgementMode>
+                    <JMSTo>yogi</JMSTo>
+                    <JMSMessageType>Text</JMSMessageType>
+                </jmsChannel>
+            </sharedChannels>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx4:PoliceRes"/>
+    <pd:endX>812</pd:endX>
+    <pd:endY>105</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1684738398631</pd:targetNamespace>
+    <pd:activity name="JDBC Query">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>335</pd:x>
+        <pd:y>84</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>select * from police where id=?</statement>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>NAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>DESIGNATION</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>FATHERNAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ADDRESS</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>PIN</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>-5</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>number</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>CONTACT</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>-5</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>number</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>Id</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <Id>
+                    <xsl:value-of select="$SOAPEventSource/inputMessage/ns:PoliceReq/ns:Id"/>
+                </Id>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>500</pd:x>
+        <pd:y>88</pd:y>
+        <config>
+            <element ref="pfx4:PoliceRes"/>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each-group select="$JDBC-Query/resultSet/Record" group-by="ID">
+                <pfx4:PoliceRes>
+                    <pfx4:Name>
+                        <xsl:value-of select="NAME"/>
+                    </pfx4:Name>
+                    <pfx4:Id>
+                        <xsl:value-of select="ID"/>
+                    </pfx4:Id>
+                    <pfx4:Designation>
+                        <xsl:value-of select="DESIGNATION"/>
+                    </pfx4:Designation>
+                    <pfx4:Fathername>
+                        <xsl:value-of select="FATHERNAME"/>
+                    </pfx4:Fathername>
+                    <pfx4:Address>
+                        <xsl:value-of select="ADDRESS"/>
+                    </pfx4:Address>
+                    <pfx4:Pin>
+                        <xsl:value-of select="PIN"/>
+                    </pfx4:Pin>
+                    <pfx4:Contact>
+                        <xsl:value-of select="CONTACT"/>
+                    </pfx4:Contact>
+                </pfx4:PoliceRes>
+            </xsl:for-each-group>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SOAPSendReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReplyActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReplyUI</pd:resourceType>
+        <pd:x>683</pd:x>
+        <pd:y>107</pd:y>
+        <config>
+            <eventSource>SOAPEventSource</eventSource>
+        </config>
+        <pd:inputBindings>
+            <outputMessage>
+                <pfx4:root>
+                    <xsl:for-each select="$Map-Data/pfx4:PoliceRes">
+                        <pfx4:PoliceRes>
+                            <pfx4:Name>
+                                <xsl:value-of select="pfx4:Name"/>
+                            </pfx4:Name>
+                            <pfx4:Id>
+                                <xsl:value-of select="pfx4:Id"/>
+                            </pfx4:Id>
+                            <pfx4:Designation>
+                                <xsl:value-of select="pfx4:Designation"/>
+                            </pfx4:Designation>
+                            <pfx4:Fathername>
+                                <xsl:value-of select="pfx4:Fathername"/>
+                            </pfx4:Fathername>
+                            <pfx4:Address>
+                                <xsl:value-of select="pfx4:Address"/>
+                            </pfx4:Address>
+                            <pfx4:Pin>
+                                <xsl:value-of select="pfx4:Pin"/>
+                            </pfx4:Pin>
+                            <pfx4:Contact>
+                                <xsl:value-of select="pfx4:Contact"/>
+                            </pfx4:Contact>
+                        </pfx4:PoliceRes>
+                    </xsl:for-each>
+                </pfx4:root>
+            </outputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>JDBC Query</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>SOAPSendReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPSendReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPEventSource</pd:from>
+        <pd:to>JDBC Query</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

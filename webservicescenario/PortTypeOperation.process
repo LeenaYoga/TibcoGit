@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://xmlns.tibco.com/encodings/mime" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/schemas/webservicescenario/Schema.xsd2" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/webservicescenario/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlPfx="http://xmlns.example.com/1684175752117" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://xmlns.example.com/1684739311931" xmlns:pfx="http://xmlns.example.com/1684175866968">
+    <xsd:import namespace="http://www.tibco.com/schemas/webservicescenario/Schema.xsd2" schemaLocation="/PoliceSchema.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1684175866968"/>
+    <wsdl:import namespace="http://xmlns.example.com/1684175752117" location="/AbstractWSDL.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1684739311931" location="/Concrete JmsWSDL.wsdl"/>
+    <pd:name>PortTypeOperation.process</pd:name>
+    <pd:startName>SOAPEventSource</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings>
+        <ns1:root>
+            <xsl:for-each select="$Map-Data/police">
+                <ns1:PoliceRes>
+                    <ns1:Name>
+                        <xsl:value-of select="Name"/>
+                    </ns1:Name>
+                    <ns1:Id>
+                        <xsl:value-of select="Id"/>
+                    </ns1:Id>
+                    <ns1:Designation>
+                        <xsl:value-of select="Designation"/>
+                    </ns1:Designation>
+                    <ns1:Fathername>
+                        <xsl:value-of select="FatherName"/>
+                    </ns1:Fathername>
+                    <ns1:Address>
+                        <xsl:value-of select="Address"/>
+                    </ns1:Address>
+                    <ns1:Pin>
+                        <xsl:value-of select="Pin"/>
+                    </ns1:Pin>
+                    <ns1:Contact>
+                        <xsl:value-of select="Contact"/>
+                    </ns1:Contact>
+                </ns1:PoliceRes>
+            </xsl:for-each>
+        </ns1:root>
+    </pd:returnBindings>
+    <pd:starter name="SOAPEventSource">
+        <pd:type>com.tibco.plugin.soap.SOAPEventSource</pd:type>
+        <pd:resourceType>ae.activities.SOAPEventSourceUI</pd:resourceType>
+        <pd:x>120</pd:x>
+        <pd:y>77</pd:y>
+        <config>
+            <service>pfx2:PortType</service>
+            <wsdlNamespaceRoot>http://xmlns.example.com/1684739311931/OperationImpl</wsdlNamespaceRoot>
+            <operation>Operation</operation>
+            <sharedChannel>/HTTP Connection.sharedhttp</sharedChannel>
+            <sharedChannels>
+                <httpChannel>
+                    <useBasicAuthentication>false</useBasicAuthentication>
+                </httpChannel>
+            </sharedChannels>
+            <portAddressPrefix/>
+            <operationStyle>document</operationStyle>
+            <soapUse>literal</soapUse>
+            <embedWsdlComponents>true</embedWsdlComponents>
+            <embedSchemaComponents>true</embedSchemaComponents>
+            <soapAction>/PortTypeOperation</soapAction>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="ns1:root"/>
+    <pd:endX>714</pd:endX>
+    <pd:endY>70</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1684175867222</pd:targetNamespace>
+    <pd:activity name="JDBC Query">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>267</pd:x>
+        <pd:y>77</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>select * from police where id=?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>Id</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>NAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>DESIGNATION</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>FATHERNAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ADDRESS</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>varchar2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>PIN</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>-5</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>number</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>CONTACT</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>-5</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>number</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <Id>
+                    <xsl:value-of select="$SOAPEventSource/inputMessage/ns1:PoliceReq/ns1:Id"/>
+                </Id>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SOAPSendReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReplyActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReplyUI</pd:resourceType>
+        <pd:x>558</pd:x>
+        <pd:y>73</pd:y>
+        <config>
+            <eventSource>SOAPEventSource</eventSource>
+        </config>
+        <pd:inputBindings>
+            <outputMessage>
+                <ns1:root>
+                    <xsl:for-each select="$Map-Data/police">
+                        <ns1:PoliceRes>
+                            <ns1:Name>
+                                <xsl:value-of select="Name"/>
+                            </ns1:Name>
+                            <ns1:Id>
+                                <xsl:value-of select="Id"/>
+                            </ns1:Id>
+                            <ns1:Designation>
+                                <xsl:value-of select="Designation"/>
+                            </ns1:Designation>
+                            <ns1:Fathername>
+                                <xsl:value-of select="FatherName"/>
+                            </ns1:Fathername>
+                            <ns1:Address>
+                                <xsl:value-of select="Address"/>
+                            </ns1:Address>
+                            <ns1:Pin>
+                                <xsl:value-of select="Pin"/>
+                            </ns1:Pin>
+                            <ns1:Contact>
+                                <xsl:value-of select="Contact"/>
+                            </ns1:Contact>
+                        </ns1:PoliceRes>
+                    </xsl:for-each>
+                </ns1:root>
+            </outputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>396</pd:x>
+        <pd:y>66</pd:y>
+        <config>
+            <element>
+                <xsd:element name="police">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Name" type="xsd:string"/>
+                            <xsd:element name="Id" type="xsd:string"/>
+                            <xsd:element name="Designation" type="xsd:string"/>
+                            <xsd:element name="FatherName" type="xsd:string"/>
+                            <xsd:element name="Address" type="xsd:string"/>
+                            <xsd:element name="Pin" type="xsd:int"/>
+                            <xsd:element name="Contact" type="xsd:int"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each-group select="$JDBC-Query/resultSet/Record" group-by="ID">
+                <police>
+                    <Name>
+                        <xsl:value-of select="NAME"/>
+                    </Name>
+                    <Id>
+                        <xsl:value-of select="ID"/>
+                    </Id>
+                    <Designation>
+                        <xsl:value-of select="DESIGNATION"/>
+                    </Designation>
+                    <FatherName>
+                        <xsl:value-of select="FATHERNAME"/>
+                    </FatherName>
+                    <Address>
+                        <xsl:value-of select="ADDRESS"/>
+                    </Address>
+                    <Pin>
+                        <xsl:value-of select="PIN"/>
+                    </Pin>
+                    <Contact>
+                        <xsl:value-of select="CONTACT"/>
+                    </Contact>
+                </police>
+            </xsl:for-each-group>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>SOAPSendReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPEventSource</pd:from>
+        <pd:to>JDBC Query</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Query</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>SOAPSendReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

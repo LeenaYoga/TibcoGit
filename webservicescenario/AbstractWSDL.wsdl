@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/schemas/webservicescenario/Schema.xsd2" xmlns:tns="http://xmlns.example.com/1684739311931" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.example.com/1684739311931">
+    <import namespace="http://www.tibco.com/schemas/webservicescenario/Schema.xsd2" location="PoliceSchema.xsd"/>
+    <message name="ReqMessage">
+        <part name="part1" element="ns:PoliceReq"/>
+    </message>
+    <message name="ResMessage">
+        <part name="part1" element="ns:root"/>
+    </message>
+    <portType name="PortType">
+        <operation name="Operation">
+            <input message="tns:ReqMessage"/>
+            <output message="tns:ResMessage"/>
+        </operation>
+    </portType>
+</definitions>
